@@ -335,3 +335,4 @@ def consultar_disponibilidad_api(request):
 
     return JsonResponse({'fecha': fecha_str, 'cancha': cancha.nombre, 'horarios': horarios})
 
+
