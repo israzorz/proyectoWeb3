@@ -154,7 +154,7 @@ def eliminar_reserva(request, pk):
         return redirect('lista_reservas')
     return render(request, 'reserva_borrado.html', {'reserva': reserva})
 
-#CRUD USUARIO
+#CRUD USUARIO 
 def lista_usuarios(request):
     usuarios = Usuario.objects.select_related('user').all()
     return render(request, 'lista_usuarios.html', {'usuarios': usuarios})
@@ -334,3 +334,4 @@ def consultar_disponibilidad_api(request):
         })
 
     return JsonResponse({'fecha': fecha_str, 'cancha': cancha.nombre, 'horarios': horarios})
+
