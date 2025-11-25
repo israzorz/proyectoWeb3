@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Lista de Actividades</h1>
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio por Hora</th>
+            {% if request.user.is_superuser %}
+                <th>Modificar</th>
+                <th>Borrar</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for actividad in actividades %}
+        <tr>
+            <td>{{ actividad.nombre }}</td>
+            <td>{{ actividad.descripcion }}</td>
+            <td>{{ actividad.precioporHora }}</td>
+            {% if request.user.is_superuser %}
+                <td><a href="{% url 'editar_actividad' actividad.id_actividad %}">Modificar</a></td>
+                <td><a href="{% url 'eliminar_actividad' actividad.id_actividad %}">Borrar</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if request.user.is_superuser %}
+    <br>
+    <a href="{% url 'crear_actividad' %}">Agregar Nueva Actividad</a>
+{% endif %}
+{% endblock %}

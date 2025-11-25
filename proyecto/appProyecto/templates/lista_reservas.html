@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Lista de Reservas</h1>
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Cancha</th>
+            <th>Usuario</th>
+            <th>Actividad</th>
+            <th>Fecha</th>
+            <th>Hora Inicio</th>
+            <th>Hora Fin</th>
+            <th>Modificar</th>
+            <th>Borrar</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.id_cancha.nombre }}</td>
+            <td>{{ reserva.id_usuario.user.username }}</td>
+            <td>{{ reserva.id_actividad.nombre }}</td>
+            <td>{{ reserva.fecha }}</td>
+            <td>{{ reserva.hora_inicio }}</td>
+            <td>{{ reserva.hora_fin }}</td>
+            <td><a href="{% url 'editar_reserva' reserva.id_reserva %}">Modificar</a></td>
+            <td><a href="{% url 'eliminar_reserva' reserva.id_reserva %}">Borrar</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<a href="{% url 'crear_reserva' %}">Agregar Nueva Reserva</a>
+{% endblock %}

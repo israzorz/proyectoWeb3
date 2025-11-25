@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Lista de Canchas</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Capacidad</th>
+                <th>Estado</th>
+                <th>Precio por Hora</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cancha in canchas %}
+            <tr>
+                <td>{{ cancha.nombre }}</td>
+                <td>{{ cancha.capacidad }}</td>
+                <td>{{ cancha.estado }}</td>
+                <td>
+                    <a href="{% url 'editar_cancha' cancha.id_cancha %}">Modificar</a> |
+                    <a href="{% url 'eliminar_cancha' cancha.id_cancha %}">Borrar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>
+        <a href="{% url 'crear_cancha' %}">Agregar Nueva Cancha</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Panel de Administrador</h1>
+
+    <div>
+        <p><a href="{% url 'lista_canchas' %}">Canchas</a></p>
+        <p><a href="{% url 'lista_actividades' %}">Tipo de Actividad</a></p>
+        <p><a href="{% url 'lista_reservas' %}">Reservas</a></p>
+        <p><a href="{% url 'lista_usuarios' %}">Usuarios</a></p>
+    </div>
+
+{% endblock %}

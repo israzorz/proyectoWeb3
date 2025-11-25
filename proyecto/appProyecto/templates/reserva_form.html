@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Editar Reserva{% else %}Crear Reserva{% endif %}</h1>
+
+<form method="post" id="reservaForm">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_cancha">Cancha:</label>
+        {{ form.id_cancha }}
+    </p>
+
+    <p>
+        <label for="id_usuario">Usuario:</label>
+        {{ form.id_usuario }}
+    </p>
+
+    <p>
+        <label for="id_actividad">Actividad:</label>
+        <select name="id_actividad" id="id_actividad">
+            {% for act in form.fields.id_actividad.queryset %}
+                <option value="{{ act.id_actividad }}" data-precio="{{ act.precioporHora }}"
+                    {% if form.instance.id_actividad and form.instance.id_actividad.id_actividad == act.id_actividad %}selected{% endif %}>
+                    {{ act.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label for="id_fecha">Fecha:</label>
+        {{ form.fecha }}
+    </p>
+
+    <p>
+        <label for="id_hora_inicio">Hora de Inicio:</label>
+        {{ form.hora_inicio }}
+    </p>
+
+    <p>
+        <label for="id_hora_fin">Hora de Fin:</label>
+        {{ form.hora_fin }}
+    </p>
+
+    <h3>Precio: <span id="precio_total">0.00</span></h3>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<a href="{% url 'lista_reservas' %}">Volver a la lista</a>
+
+<script>
+function calcularPrecio() {
+    const actividadSelect = document.getElementById("id_actividad");
+    const precioHora = parseFloat(actividadSelect.selectedOptions[0].dataset.precio);
+
+    const inicio = document.getElementById("id_hora_inicio").value;
+    const fin = document.getElementById("id_hora_fin").value;
+    const precioSpan = document.getElementById("precio_total");
+
+    if (!inicio || !fin) {
+        precioSpan.textContent = "0.00";
+        return;
+    }
+
+    // Obtener horas
+    const [hi, mi] = inicio.split(":").map(Number);
+    const [hf, mf] = fin.split(":").map(Number);
+
+    let horas = (hf + mf / 60) - (hi + mi / 60);
+
+    if (horas < 0) horas = 0;
+
+    // Redondeo hacia arriba
+    horas = Math.ceil(horas);
+
+    const total = horas * precioHora;
+    precioSpan.textContent = total.toFixed(2);
+}
+
+// Ejecutar cuando cambian los valores
+document.getElementById("id_actividad").addEventListener("change", calcularPrecio);
+document.getElementById("id_hora_inicio").addEventListener("change", calcularPrecio);
+document.getElementById("id_hora_fin").addEventListener("change", calcularPrecio);
+
+// Ejecutar al cargar si se edita una reserva
+window.onload = calcularPrecio;
+</script>
+
+{% endblock %}

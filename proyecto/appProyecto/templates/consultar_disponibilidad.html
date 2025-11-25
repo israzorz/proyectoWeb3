@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Consultar Disponibilidad</h1>
+
+<form method="get">
+    <label>Seleccionar cancha:</label>
+    <select name="cancha_id" onchange="this.form.submit()">
+        <option value="">-- Seleccione --</option>
+        {% for c in canchas %}
+            <option value="{{ c.id_cancha }}" {% if c.id_cancha|stringformat:"s" == cancha_seleccionada|stringformat:"s" %}selected{% endif %}>
+                {{ c.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+
+<!-- Calendario -->
+<form method="get">
+    <input type="hidden" name="cancha_id" value="{{ cancha_seleccionada }}">
+    <label>Seleccionar fecha:</label>
+    <input type="date" name="fecha" value="{{ fecha }}" onchange="this.form.submit()">
+</form>
+
+<hr>
+
+{% if fecha and cancha_seleccionada %}
+<h2>Disponibilidad para {{ fecha }}</h2>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Hora</th>
+            <th>Estado</th>
+
+            {% if request.user.is_superuser %}
+                <th>Actividad</th>
+                <th>Usuario</th>
+                <th>CI</th>
+            {% endif %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in disponibilidad %}
+            <tr>
+                <td>{{ item.hora }}</td>
+                <td>{{ item.estado }}</td>
+
+                {% if request.user.is_superuser %}
+                    <td>{{ item.actividad }}</td>
+                    <td>{{ item.usuario }}</td>
+                    <td>{{ item.ci }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+
+{% endblock %}

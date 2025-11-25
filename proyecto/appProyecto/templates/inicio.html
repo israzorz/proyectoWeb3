@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Bienvenido {{ request.user.username }}</h1>
+
+    <!-- Botón accesible para todos -->
+    <p>
+        <a href="{% url 'consultar_disponibilidad' %}">Consultar disponibilidad</a>
+    </p>
+    <p>
+    <a href="{% url 'lista_actividades' %}">Mostrar precios</a>
+    </p>
+
+    <!-- Botones solo para el administrador -->
+    {% if request.user.is_superuser %}
+        <p>
+            <a href="{% url 'panel_admin' %}">Panel de administrador</a>
+        </p>
+
+        <p>
+            <a href="{% url 'crear_reserva' %}">Hacer reserva</a>
+       
+        </p>
+    {% endif %}
+
+{% endblock %}

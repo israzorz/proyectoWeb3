@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Eliminar Reserva</h1>
+<p>¿Seguro que deseas eliminar la reserva de la cancha "{{ reserva.id_cancha.nombre }}" para el usuario "{{ reserva.id_usuario.user.username }}" el día {{ reserva.fecha }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'lista_reservas' %}">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto WEB III</title>
+</head>
+<body>
+    <header style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #000;">
+        <div>
+            {% if user.is_authenticated %}
+                <span>Usuario: {{ user.username }}</span>
+                <span style="margin-left: 10px;"><a href="{% url 'logout' %}">[Cerrar sesión]</a></span>
+            {% else %}
+                No has iniciado sesión
+            {% endif %}
+        </div>
+        <div>
+            <a href="{% url 'inicio' %}"><button>Inicio</button></a>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
