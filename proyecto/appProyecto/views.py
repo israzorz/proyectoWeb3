@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 #admin 12345
 #usuario1 12345
-
+#hola
 def admin_required(user):
     return user.is_superuser
 
@@ -338,6 +338,7 @@ def consultar_disponibilidad_api(request):
         })
 
     return JsonResponse({'fecha': fecha_str, 'cancha': cancha.nombre, 'horarios': horarios})
+
 
 
 
