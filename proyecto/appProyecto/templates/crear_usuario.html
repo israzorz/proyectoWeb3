@@ -1,11 +1,22 @@
 {% extends "base.html" %}
-{% block content %}
-<h1>Crear Usuario</h1>
+{% block title %}
+    {% if modo_edicion %}Editar Usuario{% else %}Crear Usuario{% endif %}
+{% endblock %}
 
-<form method="post">
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+<h1 class="text-dark mb-4">
+    {% if modo_edicion %}Editar Usuario{% else %}Crear Usuario{% endif %} 
+</h1>
+
+<form action="" method="post" class="p-4 border rounded shadow-sm bg-light">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar</button>
+    <div class="mt-4 text-center">
+        <button type="submit" class="btn btn-success btn-lg">💾 Guardar</button>
+        <a href="{% url 'lista_usuarios' %}" class="btn btn-secondary btn-lg ms-2">↩️ Volver</a>
+    </div>
 </form>
-<p><a href="{% url 'lista_usuarios' %}">Volver</a></p>
+</div>
 {% endblock %}
