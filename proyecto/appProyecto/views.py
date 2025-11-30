@@ -90,7 +90,9 @@ def lista_actividades(request):
 def crear_actividad(request):
     if request.method == 'POST':
         form = TipoActividadForm(request.POST)
+        
         if form.is_valid():
+            
             form.save()
             return redirect('lista_actividades')
     else:
@@ -109,6 +111,7 @@ def editar_actividad(request, pk):
     return render(request, 'actividad_form.html', {'form': form})
 
 def eliminar_actividad(request, pk):
+    
     actividad = get_object_or_404(TipoActividad, pk=pk)
     if request.method == 'POST':
         actividad.delete()
@@ -122,6 +125,7 @@ def eliminar_actividad(request, pk):
 
 def lista_reservas(request):
     reservas = Reserva.objects.select_related('id_cancha', 'id_usuario', 'id_actividad').all()
+    
     return render(request, 'lista_reservas.html', {'reservas': reservas})
 def crear_reserva(request):
     if request.method == "POST":
@@ -334,5 +338,6 @@ def consultar_disponibilidad_api(request):
         })
 
     return JsonResponse({'fecha': fecha_str, 'cancha': cancha.nombre, 'horarios': horarios})
+
 
 
